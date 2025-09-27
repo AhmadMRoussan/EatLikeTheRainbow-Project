@@ -1,0 +1,227 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌈 The Rainbow Garden Game 🌈</title>
+    <link rel="stylesheet" href="styles.css">
+     <!-- Google Fonts setup -->
+    <link rel="preconnect" href="https://fonts.googleapi s.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <!-- PDF setup -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>   <!-- This was not used -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>  <!-- This was not used -->
+</head>
+<!-- 
+Citation: W3Schools. (n.d.). How To - Top Navigation. Retrieved April 2025, from https://www.w3schools.com/howto/howto_js_topnav.asp
+Citation: Google Fonts. (n.d.). Optimize CSS and font loading. Retrieved March 2025, from https://developers.google.com/fonts/docs/css2 
+-->
+
+
+<body>
+    <!-- Top navigation bar -->
+    <div class="custom-nav">
+        <!-- Left of the top menu -->
+        <div class="nav-left">
+            <a href="https://eatliketherainbow.org/" title="Go to Home">
+                <img src="/wp-content/Rainbow/eltr_logo.jpg" alt="Eat Like The Rainbow Logo" class="nav-logo">
+        </div>
+        <!-- Right of the top menu -->
+        <div class="nav-right">
+            <a href="https://eatliketherainbow.org/">Home</a>
+            <a href="https://eatliketherainbow.org/adventures/">Adventures</a>
+            <a href="https://eatliketherainbow.org/games/">Games</a>
+            <a href="https://eatliketherainbow.org/about/">About</a>
+            <a href="https://eatliketherainbow.org/wp-login.php?redirect_to=https%3A%2F%2Featliketherainbow.org%2Fwp-admin%2F&reauth=1" class="login-button">Login</a>
+        </div>
+    </div>
+    <!-- Citation: W3Schools. (n.d.). How To - Navbar with Icons. Retrieved April 2025, from https://www.w3schools.com/howto/howto_css_navbar_icon.asp -->
+
+    <!-- Main Board game -->
+    <div class="page-wrapper">
+        <div class="game-container">
+             <!-- Title Board game -->
+             <h1>🌈 The Rainbow Garden Adventure 🌈</h1>
+            <p class="game-intro">Embark on a magical journey through the garden! Roll the dice, move forward, and be the first to reach the finish line! 🚀</p>
+            <!-- Player scores and game board -->
+            <div class="board-wrapper">
+                <div class="player-score-side left-score">
+                    <h3><span id="player1NameDisplay">Player 1</span></h3>
+                    <p id="player1Score">Score: 0</p>
+                </div>
+
+                <div class="board" id="board"></div>
+
+                <div class="player-score-side right-score">
+                    <h3><span id="player2NameDisplay">Player 2</span></h3>
+                    <p id="player2Score">Score: 0</p>
+                </div>
+            </div>
+             <!-- Achievement notifications -->
+            <div class="achievements" id="achievements"></div>
+            <!-- Game buttons -->
+            <div class="controls">
+                <button id="startGame">🌟 Start Game</button>
+                <button id="rollDice">🎲 Roll Dice</button>
+                <button id="resetGame">🔄 Reset</button>
+                <button id="howToPlayBtn" class="how-to-play-btn">❓ How to Play</button>
+                <p id="diceResult" class="dice-result"></p>
+                <p id="turn" class="turn-indicator"></p>
+
+            </div>
+        </div>
+    </div>
+    <!-- 
+         Citation: W3Schools. (n.d.). HTML <button> Tag. Retrieved March 2025, from https://www.w3schools.com/tags/tag_button.asp 
+         Citation: MDN Web Docs. (n.d.). Basic HTML syntax - Learn web development. Retrieved March 2025, from https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax 
+         Citation: W3Schools. (n.d.). How To - CSS Modals. Retrieved May 2025, from https://www.w3schools.com/howto/howto_css_modals.asp 
+    -->
+
+     <!-- Rename players modal -->
+    <div id="renameModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Rename Players</h2>
+            <label for="player1Name">Player 1 Name:</label>
+            <input type="text" id="player1Name" value="Player 1">
+            <label for="player2Name">Player 2 Name:</label>
+            <input type="text" id="player2Name" value="Player 2">
+            <button id="saveNames">Save Names</button>
+        </div>
+    </div>
+    <!-- Background music -->
+    <audio id="backgroundMusic" src="/wp-content/Rainbow/rainbow-music.mp3" loop autoplay></audio>
+    <!-- Citation: MDN Web Docs. (n.d.). HTML video and audio content - Learn web development. Retrieved March 2025, from https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/HTML_video_and_audio  
+        Citation: W3Schools. (n.d.). HTML input name Attribute. Retrieved March 2025, from https://www.w3schools.com/tags/att_input_name.asp 
+        Citation: W3Schools. (n.d.). How To - CSS Modals. Retrieved May 2025, from https://www.w3schools.com/howto/howto_css_modals.asp 
+    -->
+
+
+    <!-- Character Selection Modals -->
+     <!-- Player 1 -->
+    <div id="characterModal1" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Player 1 - Choose Your Character</h2>
+            <div class="character-selection">
+                <!-- Character images -->
+                <img src="/wp-content/Rainbow/Apple.png" alt="Character 1" data-character="1">
+                <img src="/wp-content/Rainbow/Bug.png" alt="Character 2" data-character="2">
+                <img src="/wp-content/Rainbow/Grape.png" alt="Character 3" data-character="3">
+                <img src="/wp-content/Rainbow/Green.png" alt="Character 4" data-character="4">
+                <img src="/wp-content/Rainbow/Green2.png" alt="Character 5" data-character="5">
+                <img src="/wp-content/Rainbow/Lemon.png" alt="Character 6" data-character="6">
+                <img src="/wp-content/Rainbow/Mushroom.png" alt="Character 7" data-character="7">
+                <img src="/wp-content/Rainbow/Tomato.png" alt="Character 8" data-character="8">
+            </div>
+            <button id="selectCharacter1">Select Character</button>
+        </div>
+    </div>
+     <!-- Player 2 -->
+    <div id="characterModal2" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Player 2 - Choose Your Character</h2>
+            <div class="character-selection">
+                <!-- Character images -->
+                <img src="/wp-content/Rainbow/Apple.png" alt="Character 1" data-character="1">
+                <img src="/wp-content/Rainbow/Bug.png" alt="Character 2" data-character="2">
+                <img src="/wp-content/Rainbow/Grape.png" alt="Character 3" data-character="3">
+                <img src="/wp-content/Rainbow/Green.png" alt="Character 4" data-character="4">
+                <img src="/wp-content/Rainbow/Green2.png" alt="Character 5" data-character="5">
+                <img src="/wp-content/Rainbow/Lemon.png" alt="Character 6" data-character="6">
+                <img src="/wp-content/Rainbow/Mushroom.png" alt="Character 7" data-character="7">
+                <img src="/wp-content/Rainbow/Tomato.png" alt="Character 8" data-character="8">
+            </div>
+            <button id="selectCharacter2">Select Character</button>
+        </div>
+    </div>
+
+<!-- Citation: W3Schools. (n.d.). How To - CSS Modals. Retrieved March 2025, from https://www.w3schools.com/howto/howto_css_modals.asp  
+     Citation: W3Schools. (n.d.). HTML <img> Tag. Retrieved March 2025, from https://www.w3schools.com/tags/tag_img.asp 
+    -->
+
+
+    <!-- Trivia questions -->
+    <div id="triviaModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="triviaQuestion">Question Text</h2>
+            <div class="trivia-answers">
+                <button class="answer-button" data-answer="1">Answer 1</button>
+                <button class="answer-button" data-answer="2">Answer 2</button>
+                <button class="answer-button" data-answer="3">Answer 3</button>
+                <button class="answer-button" data-answer="4">Answer 4</button>
+            </div>
+            <p id="triviaResult"></p>
+        </div>
+    </div>
+
+
+
+<!-- How to play window-->
+    <div id="howToPlayModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>How to Play 🌈 The Rainbow Garden Adventure 🌈</h2>
+            <p>1. Click "🌟 Start Game" to initialize the board.</p>
+            <p>2. Click "🎲 Roll Dice" to move your player.</p>
+            <p>3. The first player to reach the end of the board wins!</p>
+            <p>4. Use "🔄 Reset" to start a new game.</p>
+            <p>5. Click the names on the top to rename players before the game starts!</p>
+            <p>6. Landing on a cell marked as a <span class="indicator shortcut-indicator"></span> "shortcut" will advance you further on the board.</p>
+            <p>7. Landing on a cell marked as a <span class="indicator trap-indicator"></span> "trap" will send you backwards on the board.</p>
+            <p>8. Landing on a cell marked as a <span class="indicator orange-trap-indicator"></span> "orange trap" will send you back to the beginning.</p>
+            <p>Have fun on your magical journey through the garden! </p>
+        </div>
+    </div>
+
+    <!-- Winner and certificate-->
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+          <span class="close" id="closeWinnerModal">&times;</span>
+          <img src="/wp-content/Rainbow/CBanner.png" alt="Congratulations Banner" class="winner-banner">
+          <h2 id="winnerMessage">🎉 Player Wins! 🎉</h2>
+          <p>Congratulations! You've reached the end of the Rainbow Garden Adventure! Click on this button to receive your Winner Certificate!</p>
+  
+          <a href="https://eatliketherainbow.org/winner-certificate/" target="_blank" rel="noopener" class="winner-link-button">Claim Your Reward</a>
+        </div>
+      </div>
+
+      
+
+
+       <!-- Grade Selection Modal -->
+<div id="gradeModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeGradeModal">&times;</span>
+      <h2>Select Your Grade Level</h2>
+      <button class="grade-button" data-grade="K">Kindergarten</button><br>
+      <button class="grade-button" data-grade="1">1st Grade</button><br>
+      <button class="grade-button" data-grade="2">2nd Grade</button><br>
+      <button class="grade-button" data-grade="3">3rd Grade</button><br>
+      <button class="grade-button" data-grade="4">4th Grade</button>
+    </div>
+  </div>
+
+
+
+ <!-- Music desciption -->
+  <div class="friends-label" id="friendsLabel">
+    <span class="close-friends" id="closeFriends">&times;</span>
+    <h2>🎵 "Friends" by Dr. Priscilla Ochran Holt 🎵</h2>
+    <p>“Friends” is an original composition by Priscilla Ochran Holt.</p>
+    <p>“Friends” was inspired by childhood outdoor activities: hop-scotch, running, and swinging.</p>
+  
+    <p><strong>Performed by:</strong><br>
+    The 2025 Greater Dallas Youth Orchestra Flute Choir<br>
+    Dr. Priscilla Holt, conductor</p>
+  
+    <p><strong>Flute Choir Members:</strong><br>
+    Heetal Binwani, Ipsita Devalla, Yaru Ding, Hannah Fonteneau, Olivia Frier, Esther Jones,<br>
+    Ashley Jun, Karan Katiyor, MacKenzie Killian, Minju Kim, Jack Malcolm, Naomi Pasilas, Mayli Reinke, Chloe Ross, Rachel Ye</p>
+  </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
